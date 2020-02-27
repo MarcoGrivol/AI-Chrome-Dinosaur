@@ -1,0 +1,41 @@
+
+Create a Neural Network to play the chrome Dinosaur game: 
+  ☐ How to control the dinosaur with python ? @created(20-02-26 17:21)
+    ✘ create a copycat of the original using pygame or something else @cancelled(20-02-26 22:36)
+    ✔ use SELENIUM to interact with the browser @done(20-02-26 22:37)
+    
+    ✔ Install selenium @created(20-02-26 17:24) @done(20-02-26 17:25)
+      ✔ Install the webdriver @created(20-02-26 17:25) @done(20-02-26 17:25)
+      ✔ Test @created(20-02-26 17:25) @done(20-02-26 17:25)
+
+  Selenium:
+    ☐ How to use selenium to play the game ? @created(20-02-26 17:24)
+      `Runner.instance_.` controls most of the game
+      ✔ How to start the game and play until it crashes @created(20-02-26 17:27) @done(20-02-27 09:31)
+        The game starts with up arrow key
+        The game can be stopped by executing the script `Runner.instance_.stop()`
+        The game can be resumed by executing `Runner.instance_.play()`
+
+        One code works on the notebook but stops after `Keys.ARROW_UP` on notebook.
+        The easiest way seems to start the game manually and the run NN algorithm after the game crashes 
+        for the first time
+    
+    ☐ Create a class to control the game @created(27-02-20 09:36)
+
+  Artificial Neural Network:
+    ☐ Learn about NEAT and Random Mutations @created(20-02-26 17:26)
+      This seems like a good option for the NN 
+
+    ☐ How to create a NN to play the game ? @created(20-02-26 17:26) 
+      
+    Data:
+      ☐ What data do I need to create the NN ? @created(27-02-20 11:16)
+        ☐ Current Speed @created(27-02-20 11:17)
+        ☐ Distance @created(27-02-20 11:17)
+          `Runner.instance_.distanceMeter.digits`
+        ☐ Obstacles @created(27-02-20 11:20)
+          `Runner.instance_.horizon.obstacles` gets all  the objects on the screen
+          `Runner.instance_.horizon.obstacles[0].xPos` gets the xPos of the first obstacle
+        ☐ Trex X position @created(27-02-20 12:50)
+          seems to be fixed at 50 the xInitialPos
+          to get a better representation with beetween the dino width and the obstacle pos 
