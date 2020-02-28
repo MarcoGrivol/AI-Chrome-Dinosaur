@@ -1,6 +1,6 @@
 
 Create a Neural Network to play the chrome Dinosaur game: 
-  ☐ How to control the dinosaur with python ? @created(20-02-26 17:21)
+  ✔ How to control the dinosaur with python ? @created(20-02-26 17:21) @done(20-02-28 14:31)
     ✘ create a copycat of the original using pygame or something else @cancelled(20-02-26 22:36)
     ✔ use SELENIUM to interact with the browser @done(20-02-26 22:37)
     
@@ -19,23 +19,63 @@ Create a Neural Network to play the chrome Dinosaur game:
         One code works on the notebook but stops after `Keys.ARROW_UP` on notebook.
         The easiest way seems to start the game manually and the run NN algorithm after the game crashes 
         for the first time
-    
+
     ☐ Create a class to control the game @created(27-02-20 09:36)
+      Needs to modify the play function and adept according to the other classes
+
+      Data:
+        ☐ What data do I need to create the NN ? @created(27-02-20 11:16)
+          ✔ Current Speed @created(27-02-20 11:17) @done(20-02-28 14:34)
+            `Runner.instance_.currentSpeed`
+          ✔ Distance @created(27-02-20 11:17) @done(20-02-28 14:35)
+            `Runner.instance_.distanceMeter.digits`
+          ✔ Obstacles @created(27-02-20 11:20) @done(20-02-28 14:36)
+            `Runner.instance_.horizon.obstacles` gets all  the objects on the screen
+            `Runner.instance_.horizon.obstacles[0].xPos` gets the xPos of the first obstacle
+          ✘ Trex X position @created(27-02-20 12:50) @cancelled(20-02-28 14:42)
+            seems to be fixed at 50 the xInitialPos
+            to get a better representation with beetween the dino width and the obstacle pos 
+          ✔ Distance from object @created(28-02-20 14:42) @done(20-02-28 14:50)
+            `Runner.instance_.horizon.obstacles[0].xPos - Runner.instance_.tRex.config.WIDTH`
+  
+  Genetic Algorithm:
+    Each member of the population represents a NN
+    The class Population is responsible for the control of the population
+    It requires the size of the population, and defines the NN shape
+    ☐ Create a population @created(28-02-20 15:33)
+      ☐ Create each member @created(28-02-20 19:18)
+        ☐ Create the brain for each member @created(28-02-20 19:18)
+          ☐ Make the layers work @created(28-02-20 19:31)
+          ☐ Create the DNA for each brain @created(28-02-20 19:18)
+    ☐ Test each member fitness score @created(28-02-20 15:34)
+    ☐ Crossover @created(28-02-20 15:34)
+    ☐ Mutation @created(28-02-20 15:34)
+    
+    The DNA:
+      This class is responsible for controlling the DNA (weights and biases) of each member of the 
+      population
+
+      ☐ Set the initial state of the DNA (random at first) @created(28-02-20 19:07)
+      ☐ Get the DNA @created(28-02-20 19:03)
+      ☐ Modify DNA @created(28-02-20 19:08)
+    
+
 
   Artificial Neural Network:
     ☐ Learn about NEAT and Random Mutations @created(20-02-26 17:26)
       This seems like a good option for the NN 
+    
+    ☐ Learn about the different activation functions @created(28-02-20 18:57)
 
     ☐ How to create a NN to play the game ? @created(20-02-26 17:26) 
-      
-    Data:
-      ☐ What data do I need to create the NN ? @created(27-02-20 11:16)
-        ☐ Current Speed @created(27-02-20 11:17)
-        ☐ Distance @created(27-02-20 11:17)
-          `Runner.instance_.distanceMeter.digits`
-        ☐ Obstacles @created(27-02-20 11:20)
-          `Runner.instance_.horizon.obstacles` gets all  the objects on the screen
-          `Runner.instance_.horizon.obstacles[0].xPos` gets the xPos of the first obstacle
-        ☐ Trex X position @created(27-02-20 12:50)
-          seems to be fixed at 50 the xInitialPos
-          to get a better representation with beetween the dino width and the obstacle pos 
+      4 inputs
+      8 hidden layer
+      3 outputs - UP - NOT - LOW
+    
+      ✔ How to get the weights and set the weights and biases @created(28-02-20 18:55) @done(20-02-28 18:56)
+        `model.layers[index_of_layer].get_weights()`
+        `model.layers[index_of_layer].set_weights()` requires 2 np arrays one for weight and another for
+        biases [nd_array, array]
+
+        ☐ Are biases required ? @created(28-02-20 19:00)
+          How hard is it to make the NN work without the biases ? Is it possible ?

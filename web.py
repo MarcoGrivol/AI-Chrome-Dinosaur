@@ -2,30 +2,15 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 
-# driver = webdriver.Chrome()
-# driver.get("chrome://dino")
-# assert "chrome://dino" in driver.title
-
-# # play the game till it crashes then restart and play
-# while not driver.execute_script("return Runner.instance_.crashed"):
-#     pass
-
-# driver.execute_script("Runner.instance_.restart()")
-
-# element = driver.find_element_by_tag_name("body")
-# element.send_keys(Keys.ARROW_UP)
-
-# while True:
-#     pass
-
-# driver.close()
-init_script = "document.getElementsByClassName('runner-canvas')[0].id = 'runner-canvas';" \
-              "setInterval(function (){Runner.instance_.tRex.xPos = 0}, 500);" \
-              "setInterval(function (){Runner.instance_.tRex.xInitialPos = 0}, 500);"
 class Game:
     def __init__(self):
         self._driver = webdriver.Chrome()
-        self.element = self._driver.find_element_by_tag_name("body")
+        self._element = self._driver.find_element_by_tag_name("body")
+       
+        self._currentSpeed = 0
+        self.score = 0
+        self._obstaclesCount = 0
+        self._distance = 0
 
         self._start()
     
@@ -42,19 +27,25 @@ class Game:
         self._driver.execute_script("Runner.instance_.restart()")
     
     def _getData(self):
-        data = self._driver.execute_script("return Runner.instance_.")
+        self._currentSpeed = self._driver.execute_script("return Runner.instance_.currentSpeed")
+        self._score = self._driver.execute_script("return Runner.instance_.distanceMeter.digits")
+        self._score = ''.join(self._score)
+        self._obstaclesCount = self._driver.execute_script("return Runner.instance_.horizon.obstacles")
+        
+        obstacleXPos = self._driver.execute_script("return Runner.instance_.horizon.obstacles[0].xPos")
+        dinoXPos = self._driver.execute_script("return Runner.instance_.tRex.config.WIDTH")
 
+        self._distance = obstacleXPos - dinoXPos
 
     def play(self):
-        self._restart()
-        while not self._driver.execute_script("return Runner.instance_.crashed"):
-            try:
-                pos = self._driver.execute_script("return Runner.instance_.horizon.obstacles[0].xPos")
-                dino = self._driver.execute_script("return Runner.instance_.tRex.config.WIDTH")
-                offset = self._driver.execute_script("return Runner.instance_.tRex.xPos")
-                print(pos - dino)
-            except:
-                pass
+        while True:
+            self._restart()
+            while not self._driver.execute_script("return Runner.instance_.crashed"):
+                try:
+                    self._getData()
+                    print(self._distance, self._currentSpeed)
+                except:
+                    pass
 
 jogo = Game()
 jogo.play()
