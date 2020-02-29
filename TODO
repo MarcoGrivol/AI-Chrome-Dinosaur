@@ -37,6 +37,7 @@ Create a Neural Network to play the chrome Dinosaur game:
             to get a better representation with beetween the dino width and the obstacle pos 
           ✔ Distance from object @created(28-02-20 14:42) @done(20-02-28 14:50)
             `Runner.instance_.horizon.obstacles[0].xPos - Runner.instance_.tRex.config.WIDTH`
+          ☐ Jump @created(29-02-20 16:33)
   
   Genetic Algorithm:
     Each member of the population represents a NN
@@ -46,7 +47,13 @@ Create a Neural Network to play the chrome Dinosaur game:
       ☐ Create each member @created(28-02-20 19:18)
         ☐ Create the brain for each member @created(28-02-20 19:18)
           ☐ Make the layers work @created(28-02-20 19:31)
-          ☐ Create the DNA for each brain @created(28-02-20 19:18)
+          ✔ Create the DNA for each brain @created(28-02-20 19:18) @done(20-02-29 18:10)
+            Define the values for each layer
+            Each input shall be a row
+            Each output shall be a col
+            The biases are just a 1xCOL np array
+            ✔ Create random weights and biases @created(29-02-20 17:15) @done(20-02-29 17:16)
+              `numpy.random.uniform(low, high, (shape_x, shape_y))`
     ☐ Test each member fitness score @created(28-02-20 15:34)
     ☐ Crossover @created(28-02-20 15:34)
     ☐ Mutation @created(28-02-20 15:34)
@@ -54,11 +61,14 @@ Create a Neural Network to play the chrome Dinosaur game:
     The DNA:
       This class is responsible for controlling the DNA (weights and biases) of each member of the 
       population
-
       ☐ Set the initial state of the DNA (random at first) @created(28-02-20 19:07)
       ☐ Get the DNA @created(28-02-20 19:03)
       ☐ Modify DNA @created(28-02-20 19:08)
-    
+
+      ✔ How to get the weights and set the weights and biases @created(28-02-20 18:55) @done(20-02-28 18:56)
+        `model.layers[index_of_layer].get_weights()`
+        `model.layers[index_of_layer].set_weights()` requires 2 np arrays one for weight and another for
+        biases [nd_array, array]
 
 
   Artificial Neural Network:
@@ -71,11 +81,6 @@ Create a Neural Network to play the chrome Dinosaur game:
       4 inputs
       8 hidden layer
       3 outputs - UP - NOT - LOW
-    
-      ✔ How to get the weights and set the weights and biases @created(28-02-20 18:55) @done(20-02-28 18:56)
-        `model.layers[index_of_layer].get_weights()`
-        `model.layers[index_of_layer].set_weights()` requires 2 np arrays one for weight and another for
-        biases [nd_array, array]
 
         ☐ Are biases required ? @created(28-02-20 19:00)
           How hard is it to make the NN work without the biases ? Is it possible ?
