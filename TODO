@@ -22,6 +22,11 @@ Create a Neural Network to play the chrome Dinosaur game:
 
     ☐ Create a class to control the game @created(27-02-20 09:36)
       Needs to modify the play function and adept according to the other classes
+      While the game has not crashed
+        play the game and send the data
+        wait for the nn
+        execute NN move
+        repeat
 
       Data:
         ☐ What data do I need to create the NN ? @created(27-02-20 11:16)
@@ -29,6 +34,7 @@ Create a Neural Network to play the chrome Dinosaur game:
             `Runner.instance_.currentSpeed`
           ✔ Distance @created(27-02-20 11:17) @done(20-02-28 14:35)
             `Runner.instance_.distanceMeter.digits`
+            Needs to be converted to float
           ✔ Obstacles @created(27-02-20 11:20) @done(20-02-28 14:36)
             `Runner.instance_.horizon.obstacles` gets all  the objects on the screen
             `Runner.instance_.horizon.obstacles[0].xPos` gets the xPos of the first obstacle
@@ -37,16 +43,17 @@ Create a Neural Network to play the chrome Dinosaur game:
             to get a better representation with beetween the dino width and the obstacle pos 
           ✔ Distance from object @created(28-02-20 14:42) @done(20-02-28 14:50)
             `Runner.instance_.horizon.obstacles[0].xPos - Runner.instance_.tRex.config.WIDTH`
-          ☐ Jump @created(29-02-20 16:33)
+          ✔ Jump @created(29-02-20 16:33) @done(20-03-01 16:15)
+            Is jumping
   
   Genetic Algorithm:
     Each member of the population represents a NN
     The class Population is responsible for the control of the population
     It requires the size of the population, and defines the NN shape
-    ☐ Create a population @created(28-02-20 15:33)
-      ☐ Create each member @created(28-02-20 19:18)
-        ☐ Create the brain for each member @created(28-02-20 19:18)
-          ☐ Make the layers work @created(28-02-20 19:31)
+    ✔ Create a population @created(28-02-20 15:33) @done(20-03-01 11:20)
+      ✔ Create each member @created(28-02-20 19:18) @done(20-03-01 11:20)
+        ✔ Create the brain for each member @created(28-02-20 19:18) @done(20-03-01 11:20)
+          ✔ Make the layers work @created(28-02-20 19:31) @done(20-03-01 10:20)
           ✔ Create the DNA for each brain @created(28-02-20 19:18) @done(20-02-29 18:10)
             Define the values for each layer
             Each input shall be a row
@@ -55,6 +62,10 @@ Create a Neural Network to play the chrome Dinosaur game:
             ✔ Create random weights and biases @created(29-02-20 17:15) @done(20-02-29 17:16)
               `numpy.random.uniform(low, high, (shape_x, shape_y))`
     ☐ Test each member fitness score @created(28-02-20 15:34)
+      ✔ Run the game and get the inputs @created(01-03-20 11:29) @done(20-03-01 14:04)
+      ✔ Pass the inputs through the NN @created(01-03-20 11:29) @done(20-03-01 14:45)
+      ✔ Get the outputs @created(01-03-20 11:29) @done(20-03-01 14:45)
+      ✔ Evaluate the outputs and get the Score @created(01-03-20 11:29) @done(20-03-01 14:45)
     ☐ Crossover @created(28-02-20 15:34)
     ☐ Mutation @created(28-02-20 15:34)
     

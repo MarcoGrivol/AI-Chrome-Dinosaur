@@ -2,11 +2,9 @@ import tensorflow as tf
 import numpy as np
 
 class DNA:
-    def __init__(self, layers, weights):
-        self._layers = layers
+    def __init__(self, weights):
         self._weights = weights
-        self._setDNA()
-        print(self._weights)
+        # self._setDNA()
 
     def _setDNA(self):
         # not self._weights = set random weights
@@ -24,12 +22,43 @@ class DNA:
 
 class Brain(DNA):
     def __init__(self, layers, weights=None):
-        super(Brain, self).__init__(layers, weights)
-        self._model = tf.keras.Sequential([
-            tf.keras.layers.InputLayer(input_shape=(4,)),
-            tf.keras.layers.Dense(8, input_shape=(4,), activation='sigmoid'),
-            tf.keras.layers.Dense(3, activation='sigmoid')
-        ])
+        self.fitness = 0
+        self._layers = layers
+        self._model = tf.keras.Sequential()
+        self._addLayersToModel()
+        # if random weights
+        if not weights:
+            weights = []
+            for data in self._model.layers:
+                weights.append(data.get_weights())
+            weights = np.array(weights)
+        super(Brain, self).__init__(weights)
 
-layers = [4, 8, 3]
-brain = Brain(layers)
+    def _addLayersToModel(self):
+        new = tf.keras.layers.InputLayer(input_shape=(self._layers[0],))
+        self._model.add(new)
+        # ignore the input layers defined above with range starting at 1
+        for i in range(1, len(self._layers)):
+            new = tf.keras.layers.Dense(self._layers[i], activation='tanh')
+            self._model.add(new)
+
+    def runInputs(self, inputs):
+        data = np.array(inputs)
+        data = data.transpose()
+        # return outputs
+        # predict return numpy.ndarray
+        return self._model.predict(data)[0][0]
+        
+
+if __name__ == "__main__":
+    from web import Game
+
+    layers = [4, 8, 1]
+    brain = Brain(layers)
+
+    game = Game()
+    score, outputs = game.play(brain)
+    print(outputs, len(outputs), type(outputs))
+    print(outputs.astype(float))
+    print(outputs[0][0])
+    
