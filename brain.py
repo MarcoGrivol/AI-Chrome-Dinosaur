@@ -48,8 +48,19 @@ class Brain(DNA):
         # return outputs
         # predict return numpy.ndarray
         return self._model.predict(data)[0][0]
-        
 
+    def getDNA(self):
+        dna = [layer.get_weights() for layer in self._model.layers]
+        layers = []
+        for value in self._model.layers:
+            print("layers===============")
+            print(value.get_weights())
+            print(len(value.get_weights()))
+        print("dna ================")
+        print(dna[0])
+        print(len(dna[0]))
+        return dna
+        
 if __name__ == "__main__":
     from web import Game
 
