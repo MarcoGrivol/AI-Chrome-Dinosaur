@@ -20,7 +20,7 @@ Create a Neural Network to play the chrome Dinosaur game:
         The easiest way seems to start the game manually and the run NN algorithm after the game crashes 
         for the first time
 
-    ☐ Create a class to control the game @created(27-02-20 09:36)
+    ✔ Create a class to control the game @created(27-02-20 09:36) @done(20-03-01 21:15)
       Needs to modify the play function and adept according to the other classes
       While the game has not crashed
         play the game and send the data
