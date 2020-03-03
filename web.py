@@ -6,6 +6,7 @@ class Game:
     def __init__(self):
         self._currentSpeed = 0
         self._score = 0
+        self._obstacleYPos = 0
         self._obstaclesCount = 0
         self._distance = 0
         self._isJumping = 0
@@ -55,17 +56,22 @@ class Game:
         self._obstaclesCount = self._driver.execute_script("return Runner.instance_.horizon.obstacles")
         self._obstaclesCount = float(len(self._obstaclesCount))
         self._isJumping = float(self._driver.execute_script("return Runner.instance_.tRex.jumping"))
+        # if there is no object ignore error
         try:
             obstacleXPos = self._driver.execute_script("return Runner.instance_.horizon.obstacles[0].xPos")
             dinoXPos = self._driver.execute_script("return Runner.instance_.tRex.config.WIDTH")
             self._distance = obstacleXPos - dinoXPos
+            # 100 is the ground
+            self._obstacleYPos = self._driver.execute_script("return Runner.instance_.horizon.obstacles[0].yPos")
+            self._obstaclesYPos = 100 - self._obstacleYPos
         except:
             self._distance = 800
+            self._obstacleYPos = 0
 
     def _dataAsArray(self):
         output = []
         output.append([self._currentSpeed])
-        output.append([self._score])
+        output.append([self._obstacleYPos])
         output.append([self._obstaclesCount])
         output.append([self._isJumping])
         output.append([self._distance])
@@ -84,12 +90,12 @@ class Game:
             # x > 0.1 jump
             # print(gameData, output, isDucking, self._isJumping())
             # print("-----------------------------------------------------------------------")
-            if output > 0.1:
+            if output > 0.2:
                 if isDucking:
                     isDucking = False
                     self._duck(isDucking)
                 self._jump()
-            elif output < -0.1:
+            elif output < -0.2:
                 # only call duck if a state is changed and not in mid air
                 if not isDucking and not self._isJumping:
                     isDucking = True

@@ -6,10 +6,10 @@ Create a Neural Network to play the chrome Dinosaur game:
     
     ✔ Install selenium @created(20-02-26 17:24) @done(20-02-26 17:25)
       ✔ Install the webdriver @created(20-02-26 17:25) @done(20-02-26 17:25)
-      ✔ Test @created(20-02-26 17:25) @done(20-02-26 17:25)
+      ✔ Test @createa d(20-02-26 17:25) @done(20-02-26 17:25)
 
   Selenium:
-    ☐ How to use selenium to play the game ? @created(20-02-26 17:24)
+    ✔ How to use selenium to play the game ? @created(20-02-26 17:24) @done(20-03-03 14:40)
       `Runner.instance_.` controls most of the game
       ✔ How to start the game and play until it crashes @created(20-02-26 17:27) @done(20-02-27 09:31)
         The game starts with up arrow key
@@ -29,7 +29,7 @@ Create a Neural Network to play the chrome Dinosaur game:
         repeat
 
       Data:
-        ☐ What data do I need to create the NN ? @created(27-02-20 11:16)
+        ✔ What data do I need to create the NN ? @created(27-02-20 11:16) @done(20-03-03 14:40)
           ✔ Current Speed @created(27-02-20 11:17) @done(20-02-28 14:34)
             `Runner.instance_.currentSpeed`
           ✔ Distance @created(27-02-20 11:17) @done(20-02-28 14:35)
@@ -61,20 +61,20 @@ Create a Neural Network to play the chrome Dinosaur game:
             The biases are just a 1xCOL np array
             ✔ Create random weights and biases @created(29-02-20 17:15) @done(20-02-29 17:16)
               `numpy.random.uniform(low, high, (shape_x, shape_y))`
-    ☐ Test each member fitness score @created(28-02-20 15:34)
+    ✔ Test each member fitness score @created(28-02-20 15:34) @done(20-03-03 14:30)
       ✔ Run the game and get the inputs @created(01-03-20 11:29) @done(20-03-01 14:04)
       ✔ Pass the inputs through the NN @created(01-03-20 11:29) @done(20-03-01 14:45)
       ✔ Get the outputs @created(01-03-20 11:29) @done(20-03-01 14:45)
       ✔ Evaluate the outputs and get the Score @created(01-03-20 11:29) @done(20-03-01 14:45)
-    ☐ Crossover @created(28-02-20 15:34)
-    ☐ Mutation @created(28-02-20 15:34)
+    ✔ Crossover @created(28-02-20 15:34) @done(20-03-03 14:30)
+    ✔ Mutation @created(28-02-20 15:34) @done(20-03-03 14:40)
     
     The DNA:
       This class is responsible for controlling the DNA (weights and biases) of each member of the 
       population
-      ☐ Set the initial state of the DNA (random at first) @created(28-02-20 19:07)
-      ☐ Get the DNA @created(28-02-20 19:03)
-      ☐ Modify DNA @created(28-02-20 19:08)
+      ✔ Set the initial state of the DNA (random at first) @created(28-02-20 19:07) @done(20-03-03 14:40)
+      ✔ Get the DNA @created(28-02-20 19:03) @done(20-03-03 14:40)
+      ✔ Modify DNA @created(28-02-20 19:08) @done(20-03-03 14:40)
 
       ✔ How to get the weights and set the weights and biases @created(28-02-20 18:55) @done(20-02-28 18:56)
         `model.layers[index_of_layer].get_weights()`
@@ -88,10 +88,10 @@ Create a Neural Network to play the chrome Dinosaur game:
     
     ☐ Learn about the different activation functions @created(28-02-20 18:57)
 
-    ☐ How to create a NN to play the game ? @created(20-02-26 17:26) 
+    ✔ How to create a NN to play the game ? @created(20-02-26 17:26) @done(20-03-03 14:40)
       4 inputs
       8 hidden layer
       3 outputs - UP - NOT - LOW
 
-        ☐ Are biases required ? @created(28-02-20 19:00)
+        ✔ Are biases required ? @created(28-02-20 19:00) @done(20-03-03 14:40)
           How hard is it to make the NN work without the biases ? Is it possible ?
