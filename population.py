@@ -2,14 +2,17 @@ from brain import Brain
 from web import Game
 import random
 import math
+import numpy as np
 
 class Population:
     # each element in layers represent a layer and the element represent the number of neurons inside each layer
     # layers = [4, 8, 3] represents 4 inputs, 1 hidden layer with 8 neurons and output 3 outputs
-    def __init__(self, popSize, layers):
-        # self._game = Game()
+    def __init__(self, popSize, layers, mutation=0.1, leftOver=0.2):
+        self._game = Game()
         self._popSize = popSize
         self._layers = layers
+        self._mutation = mutation
+        self._leftOver = leftOver
         self._population = []
         for _ in range(popSize):
             self._population.append(Brain(self._layers))
@@ -25,90 +28,93 @@ class Population:
     def _coinToss(self):
         return random.randint(0, 1)
 
-    def _zeroMeanFitness(self):
-        # mean = 0
-        # fitnessList = []
-        # for member in self._population:
-        #     mean += member.fitness
-        #     fitnessList.append(member.fitness)
-        # mean /= self._popSize
-        # fitnessList = [int(math.ceil(score - mean)) for score in fitnessList]
-        # return fitnessList
-        pop = [170.0, 63.0, 104.0, 48.0, 48.8, 48.0, 133.0, 61.0, 57.0, 90.0]
-        mean = 0
-        fitnessList = []
-        for member in pop:
-            mean += member
-            fitnessList.append(member)
-        mean /= self._popSize
-        fitnessList = [int(math.ceil(score - mean)) for score in fitnessList]
+    def _fitnessFormat(self):
+        fitnessList = [int(member.fitness) for member in self._population]
+        # -1 to avoid empty fitness list
+        minimum = min(fitnessList) - 1
+        fitnessList = [n - minimum for n in fitnessList]
         return fitnessList
 
     # retunrs list with the best fit members
     # every member of the population is in the list, but those w better fit will repeat
     def _bestFitPopulation(self):
-        fitnessList = self._zeroMeanFitness()
+        fitnessList = self._fitnessFormat()
         popToCrossover = []
         for i in range(self._popSize):
-            if fitnessList[i] > 0:
-                for _ in range(fitnessList[i]):
-                    popToCrossover.append(i)
-            else:
+            for _ in range(fitnessList[i]):
                 popToCrossover.append(i)
         return popToCrossover
-
-    def _randIndex(self, a, b):
-        return random.randint(a, b)
 
     def _mixDNA(self, parentA, parentB):
         parentA = self._population[parentA].getDNA()
         parentB = self._population[parentB].getDNA()
         dna = []
-        # for weights, biases in parentA:
-        #     if self._coinToss():
-        #         childDNA.append(weights)
-        #         childDNA.append(biases)
-        #     else:
-        #         pass
-        print("PARENT AAAAA =============================")
-        print(parentA)
-        print("PARENT BBBBB =============================")
-        print(parentB)
         for layer in range(len(parentA)):
             for wb in range(len(parentA[layer]) - 1):
+                # define the weight             
                 weightA = parentA[layer][wb] 
-                biasesA = parentA[layer][wb + 1] 
                 weightB = parentB[layer][wb] 
-                biasesB = parentB[layer][wb + 1]                 
+                childWeight = []  
                 for i in range(len(weightA)):
+                    row = []
                     for j in range(len(weightA[0])):
-                        
-        
-        print("CHILD =================================")
-        print(dna)
+                        if self._coinToss():
+                            row.append(weightA[i][j])
+                        else:
+                            row.append(weightB[i][j])
+                    childWeight.append(row)
+                # define the bias
+                biasA = parentA[layer][wb + 1] 
+                biasB = parentB[layer][wb + 1] 
+                childBias = []
+                if self._coinToss():
+                    childBias.append(biasA)
+                else:
+                    childBias.append(biasB)
+
+            # add layer weight and bias
+            dna.append([np.array(childWeight), np.array(childBias)])
         return dna
+
+    def _isLeftOver(self):
+        if self._leftOver < random.uniform(0, 1):
+            fitnessList = [int(member.fitness) for member in self._population]
+            minimum = min(fitnessList)
+            for i in range(self._popSize):
+                if self._population[i].fitness > minimum:
+                    return self._population[i]
+        else:
+            return False
 
     def crossOver(self):
         newPopulation = []
         popToCrossover = self._bestFitPopulation()
         maxRange = len(popToCrossover) - 1
-        for _ in range(1):
-            indexA = random.randint(0, maxRange)
-            parentA = popToCrossover[indexA]
-            indexB = random.randint(0, maxRange)
-            parentB = popToCrossover[indexB]
-            while parentA == parentB:
+        print(popToCrossover, maxRange)
+        for _ in range(self._popSize):
+            leftOver = self._isLeftOver()
+            if not leftOver:
+                indexA = random.randint(0, maxRange)
+                parentA = popToCrossover[indexA]
                 indexB = random.randint(0, maxRange)
                 parentB = popToCrossover[indexB]
-            dna = self._mixDNA(parentA, parentB)
-            child = Brain(self._layers, weights=dna)
-            newPopulation.append(child)
+                while parentA == parentB:
+                    indexB = random.randint(0, maxRange)
+                    parentB = popToCrossover[indexB]
+                dna = self._mixDNA(parentA, parentB)
+                child = Brain(self._layers, weights=dna)
+                newPopulation.append(child)
+            else:
+                newPopulation.append(leftOver)
         self._population = newPopulation
 
 
 if __name__ == "__main__":
-    popSize = 10
-    layers = [5, 8, 1]
+    popSize = 8
+    layers = [5, 8, 10, 1]
     population = Population(popSize, layers)
-    #  population.runGeneration()
-    population.crossOver()
+    for i in range(10):
+        print("Population: ", i)
+        population.runGeneration()
+        population.crossOver()
+        print("===============================================================")
