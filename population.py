@@ -16,7 +16,6 @@ class Population:
         self._leftOverPop = int(leftOverPop * self._popSize)
         self._newPop = int(newPop * self._popSize)
         self._mutation = mutation
-        self._minimum = math.inf
         self._population = []
         for _ in range(popSize):
             self._population.append(Brain(self._layers))
@@ -54,11 +53,9 @@ class Population:
 
     def _fitnessFormat(self):
         fitnessList = [int(member.fitness) for member in self._population]
-        print(fitnessList, self._minimum)
         # -1 to avoid empty fitness list
-        if self._minimum > min(fitnessList) - 1:
-            self._minimum = min(fitnessList)
-        fitnessList = [math.ceil(n / self._minimum) for n in fitnessList]
+        minimum = min(fitnessList) - 1
+        fitnessList = [math.ceil((n - minimum) / 5) for n in fitnessList]
         return np.array(fitnessList)
 
     # retunrs list with the best fit members
@@ -177,7 +174,7 @@ class Population:
             print("================================================")
 
 if __name__ == "__main__":
-    popSize = 20
-    layers = [5, 8, 10, 1]
+    popSize = 10
+    layers = [5, 8, 1]
     population = Population(popSize, layers, generations=100)
     population.runForAallGenerations()
